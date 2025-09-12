@@ -8,7 +8,7 @@ const pageActive = useState('pageActive', () => 'products');
 
 if (process.client) {
   // turned off for performance-testing of the individual strategies s1-s4 (to prevent clienside graphql request)
-  // initializeCart();
+  initializeCart();
 }
 
 const isWebhookActive = useState('isWebhookActive', () => false);
