@@ -33,7 +33,7 @@ if (errorProducts.value) {
 <template>
     <div>
         <ProductsPageLayoutNoPagination :products="products">
-            <template #title>S2 - NoPag</template>
+            <template #title>S2 - No Clientside Pagination</template>
             <!-- <template #description>
                 <p>SSR - Using ProductCache + Webhooks <span>(Status =
                         <span v-if="isWebhookActive" class="bg-green-800">Subscribed)</span>

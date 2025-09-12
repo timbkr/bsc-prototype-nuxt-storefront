@@ -24,7 +24,7 @@ if (errorProducts.value) {
 <template>
     <div>
         <ProductsPageLayoutNoPagination :products="products">
-            <template #title>S1 - NoPag</template>
+            <template #title>S1 - No Clientside Pagination</template>
             <!-- <template #description>
                 <p>SSR - Fetch ALL Products from Shopify on every Request</p>
             </template>

@@ -21,7 +21,7 @@ if (errorProducts.value) {
 <template>
     <div>
         <ProductsPageLayoutNoPagination :products="products">
-            <template #title>S3 - NoPag</template>
+            <template #title>S3 - No Clientside Pagination</template>
             <!-- <template #description>
                 <p>SWR - fetch from shopify</p>
             </template>
