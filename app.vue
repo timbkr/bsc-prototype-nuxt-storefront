@@ -23,26 +23,13 @@ if (process.server) {
 
 <template>
   <div id="app">
-    <header class="bg-slate-700 z-50">
+    <header class="bg-slate-700 z-50 rounded-b-md">
       <nav class="header-grid">
-        <!-- <nuxt-link to="/">Home</nuxt-link> -->
         <div class="nav-left flex justify-end items-center gap-8">
-          <!-- <a href="/products1" class="navLink" :class="pageActive === 'p1' ? 'router-link-active' : ''">P 1</a> -->
           <nuxt-link to="/s1" class="navLink">S1</nuxt-link>
           <nuxt-link to="/s2" class="navLink">S2</nuxt-link>
           <nuxt-link to="/s3" class="navLink">S3</nuxt-link>
           <nuxt-link to="/s4" class="navLink">S4</nuxt-link>
-          <!-- <a href="/s4" class="navLink" :class="pageActive === 's4' ? 'router-link-active' : ''">S4</a> -->
-          <span class="mx-2">|</span>
-          <nuxt-link to="/nopag/s1" class="navLink">npS1</nuxt-link>
-          <nuxt-link to="/nopag/s2" class="navLink">npS2</nuxt-link>
-          <nuxt-link to="/nopag/s3" class="navLink">npS3</nuxt-link>
-          <nuxt-link to="/nopag/s4" class="navLink">npS4</nuxt-link>
-
-          <!-- <a href="/nopag/s1" class="navLink">npS1</a>
-          <a href="/nopag/s2" class="navLink">npS2</a>
-          <a href="/nopag/s3" class="navLink">npS3</a>
-          <a href="/nopag/s4" class="navLink">npS4</a> -->
         </div>
         <div class="nav-mid navbarHeight">
           <img alt="Nuxt logo" class="logo" src="/nuxt-icon-green.svg" width="45" height="45" />

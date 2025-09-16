@@ -47,7 +47,7 @@ Produktliste (Nuxt 3 + Shopify API):
 -   **Frontend**: Nuxt 3 (SSR, SWR, Cache)
 -   **Styling**: TailwindCSS
 -   **API**: Shopify Storefront API (GraphQL)
--   **Deployment**: Google Cloud Run (CI/CD Deployment bei Push auf main)
+-   **Deployment**: Netlify (CI/CD Deployment bei Push auf main)
 -   **Messungen**: Postman, WebPageTest
 -   **Lokale Entwicklung**: ngrok für Webhooks
 

@@ -1,176 +1,146 @@
-<script>
-
-</script>
-
 <template>
-  <div class="about-page">
-    <h1>About This Project</h1>
-    <p>
-      This project is a Headless E-Commerce prototype developed as part of my Bachelor's thesis.
-      It uses <strong>Nuxt.js</strong> for the frontend and the <strong>Shopify Storefront API</strong> for the backend.
-    </p>
-    <p>
-      The primary goal of this project was to design and evaluate the performance and data freshness of four
-      data-fetching strategies for a product listing page. These strategies employed two rendering methods—server-side
-      rendering (SSR) and stale-while-revalidate
-      (SWR)—along with a local data cache approach (using Webhooks to ensure data freshness), using product data fetched
-      from Shopify's backend within a realistic
-      e-commerce scenario.
-    </p>
-    <h2>Data-Fetching Strategies</h2>
-    <ul>
-      <li><strong>S1:</strong> SSR with direct API requests (Standard)</li>
-      <li><strong>S2:</strong> SSR with API data caching and Webhooks (Enhanced)</li>
-      <li><strong>S3:</strong> SWR with direct API requests (Standard)</li>
-      <li><strong>S4:</strong> SWR with initial cache population, on-demand revalidation, API data caching, and webhooks
-        (Enhanced)</li>
-    </ul>
-    <p>
-      Each strategy was evaluated based on performance and data freshness using:
-    </p>
-    <ul>
-      <li>Server-side response times (measured with Postman, 1000 sequential requests, average response time)</li>
-      <li>Web performance metrics (measured with WebPageTest, 9 runs per strategy, average values)</li>
-    </ul>
+    <div class="min-h-screen bg-[rgb(18,10,29)] flex flex-col items-center py-12 px-6">
+        <div class="max-w-4xl w-full bg-[rgb(51,65,85)] shadow-lg rounded-2xl p-8">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold mb-4 text-white">
+                    Headless E-Commerce Performance-Prototyp
+                </h1>
+                <p class="text-xl text-gray-200 mb-4">
+                    Dieses Projekt entstand im Rahmen meiner Bachelorarbeit in Informatik
+                </p>
+                <p class="text-gray-300">
+                    Konzeptionierung und Evaluierung von vier verschiedenen <strong>Datenabfragestrategien</strong> in
+                    einem Headless-E-Commerce-Prototyp mit Fokus auf <strong>Performance-Optimierung</strong> und
+                    <strong>Datenaktualität</strong>
+                </p>
+            </div>
+            <!-- Tech Stack & Methodik -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-white">🛠️ Tech Stack & Methodik</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-[rgb(30,41,59)] p-6 rounded-xl">
+                        <h3 class="text-lg font-semibold text-white mb-3">Technologien</h3>
+                        <ul class="space-y-2 text-gray-200">
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                                Nuxt 3 + TailwindCSS
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                                Shopify Storefront API (GraphQL)
+                            </li>
+                            <li class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                                Google Cloud Run
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-[rgb(30,41,59)] p-6 rounded-xl">
+                        <h3 class="text-lg font-semibold text-white mb-3">Testing & Evaluation</h3>
+                        <ul class="space-y-2 text-gray-200">
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                Postman (1000 sequenzielle Requests)
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                WebPageTest (9 Runs pro Strategie)
+                            </li>
+                            <li class="flex items-start">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                                Realistische Datensätze (250-511 Produkte, Paginierte Abfragen)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-gray-200 mt-6">
+                    Jede der vier Strategien implementiert eine einzigartige Kombination aus Rendering-Methoden und
+                    Caching-Mechanismen, um die Einflüsse auf Performance und Datenaktualität zu untersuchen.
+                </p>
+            </div>
+            <!-- Strategies -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-white">📋 Die vier evaluierten Strategien</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-[rgb(30,41,59)] p-5 rounded-xl">
+                        <h3 class="text-lg font-semibold text-white mb-2">S1 (Standard SSR)</h3>
+                        <p class="text-gray-300 text-sm">Direkte API-Abfrage bei jedem Seitenaufruf</p>
+                    </div>
+                    <div class="bg-[rgb(30,41,59)] p-5 rounded-xl">
+                        <h3 class="text-lg font-semibold text-white mb-2">S2 (Enhanced SSR)</h3>
+                        <p class="text-gray-300 text-sm">Server-Side Rendering mit lokalem API-Daten-Cache und Webhooks
+                            zur Aktualisierung</p>
+                    </div>
+                    <div class="bg-[rgb(30,41,59)] p-5 rounded-xl">
+                        <h3 class="text-lg font-semibold text-white mb-2">S3 (Standard SWR)</h3>
+                        <p class="text-gray-300 text-sm">Stale-While-Revalidate für schnelle Auslieferung</p>
+                    </div>
+                    <div class="bg-[rgb(30,41,59)] p-5 rounded-xl border-2 border-green-500">
+                        <h3 class="text-lg font-semibold text-white mb-2">S4 (Enhanced SWR)</h3>
+                        <p class="text-gray-300 text-sm">Erweiterte SWR-Strategie mit Webhooks und
+                            On-demand-Revalidation für garantierte Datenaktualität</p>
+                        <span class="inline-block mt-2 px-2 py-1 bg-green-600 text-white text-xs rounded-full">Beste
+                            Performance</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Key Results -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4 text-white">📊 Wichtigste Erkenntnisse</h2>
+                <div class="bg-[rgb(30,41,59)] p-6 rounded-xl">
+                    <p class="text-gray-200 mb-6">
+                        Die systematischen Messungen mit <strong>WebPageTest</strong> und <strong>Postman</strong>
+                        zeigten, dass optimierte Strategien die Performance signifikant verbessern.
+                    </p>
 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-green-400 mb-2">-457ms</div>
+                            <div class="text-gray-300">Largest Contentful Paint (LCP)</div>
+                            <div class="text-gray-400 text-sm">Verbesserung von S1 auf S4</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-green-400 mb-2">-117ms</div>
+                            <div class="text-gray-300">Time to First Byte (TTFB)</div>
+                            <div class="text-gray-400 text-sm">Verbesserung von S1 auf S4</div>
+                        </div>
+                    </div>
 
-    <h2>Evaluation Results</h2>
+                    <div class="bg-[rgb(18,10,29)] p-4 rounded-xl border-l-4 border-green-500 mb-4">
+                        <p class="text-green-200">
+                            Die Integration von Webhooks eliminierte das Risiko veralteter Daten, das bei einfachen
+                            Caching-Ansätzen besteht.
+                        </p>
+                    </div>
 
-    <h3>Performance - Most Important Findings</h3>
-    <p>
-      The most significant improvements from S1 (Standard SSR) to S4 (Enhanced SWR) are:
-    </p>
-    <ul>
-      <li><strong>Time to First Byte (TTFB):</strong> Improved by <strong>117ms</strong>.</li>
-      <li><strong>Largest Contentful Paint (LCP):</strong> Reduced by <strong>457ms</strong>, demonstrating faster page
-        rendering.</li>
-    </ul>
-
-    <p>
-      The tests were conducted using two datasets: one with 250 products (single API request) and another with 511
-      products
-      (three paginated API requests, due to the backend API's limit of 250 products per request). This setup reflects
-      realistic
-      e-commerce scenarios with varying data sizes.
-    </p>
-
-    <div class="diagrams flex">
-      <figure>
-        <img src="/assets/images/postman-combined.png"
-          alt="Diagram showing average server response times from Postman tests" />
-        <figcaption>Average server response times from Postman tests (1000 sequential requests)</figcaption>
-      </figure>
-      <figure>
-        <img src="/assets/images/webpagetest-combined.png"
-          alt="Diagram showing average web performance metrics from WebPageTest" />
-        <figcaption>Average web performance metrics from WebPageTest (9 test runs per strategy)</figcaption>
-      </figure>
+                    <div class="bg-[rgb(18,10,29)] p-4 rounded-xl border-l-4 border-yellow-500">
+                        <p class="text-yellow-200 font-semibold">
+                            💡 <strong>Schlüssel-Erkenntnis:</strong> Der größte Performance-Gewinn resultiert aus der
+                            Eliminierung der API-Latenz durch Caching. Die Wahl der Rendering-Methode (SSR vs. SWR) hat
+                            einen geringeren Einfluss.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- GitHub Link -->
+            <div class="text-center bg-gradient-to-r from-purple-600 to-blue-600 p-6 rounded-xl">
+                <h2 class="text-2xl font-semibold text-white mb-3">Vollständige Dokumentation</h2>
+                <p class="text-gray-200 mb-4">
+                    Das vollständige Projekt mit detaillierter technischer Dokumentation, Code und allen Messergebnissen
+                    befindet sich auf GitHub.
+                </p>
+                <a href="https://github.com/timbkr/bsc-prototype-nuxt-storefront" target="_blank"
+                    class="transition-colors border-2 border-red-500 hover:border-orange-500 inline-block bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg transition-colors">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        <span>Zum GitHub Repository</span>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
-
-    <h3>Data Freshness</h3>
-    <p>
-      The data freshness of the strategies was also evaluated. The results show:
-    </p>
-    <ul>
-      <li><strong>S1, S2, and S4:</strong> All strategies delivered fresh data consistently, with S2 and S4 leveraging
-        Webhooks to ensure data accuracy.</li>
-      <li><strong>S3:</strong> Did not consistently deliver fresh data, highlighting the limitations of a Standard
-        SWR-Implementation with direct API
-        requests without Webhooks and on-demand revalidation.</li>
-    </ul>
-    <p>
-      These findings confirm that the use of Webhooks in S2 and S4 (as well as on-demand revalidation in S4) works
-      correctly to maintain data freshness.
-    </p>
-
-    <h2>Conclusion</h2>
-    <p>
-      The evaluation confirms that optimized data-fetching strategies, particularly the use of caching mechanisms +
-      webhooks (S2,
-      S4)
-      and on-demand revalidation (S4), significantly improve both performance and data freshness in headless e-commerce
-      systems.
-    </p>
-    <p>
-      Key recommendations include:
-    </p>
-    <ul>
-      <li><strong>Eliminating API latency:</strong> API caching (S1 → S2) provides the largest performance boost,
-        especially for large or paginated datasets.</li>
-      <li><strong>Optimizing rendering methods:</strong> SWR with on-demand revalidation (S2 → S4) offers additional
-        fine-tuning for performance and scalability.</li>
-    </ul>
-    <p>
-      These improvements are not only technically impactful but also economically relevant, as even small performance
-      gains
-      (e.g., TTFB >100ms, LCP >450ms) can positively influence conversion rates and revenue in e-commerce.
-    </p>
-    <p>
-      In summary, adopting advanced data-fetching strategies is a practical and effective approach to enhance the
-      performance
-      and user experience of headless e-commerce platforms.
-    </p>
-
-    <h2>Key Features</h2>
-    <ul>
-      <li>Real-world use case: Product listing page with dynamic data fetching</li>
-      <li>Unified HTML and CSS for consistent performance testing</li>
-      <li>Focus on caching and rendering optimizations</li>
-      <li>Evaluation of four distinct data-fetching strategies (SSR and SWR)</li>
-      <li>Integration with Shopify Storefront API for realistic e-commerce scenarios</li>
-      <li>Support for paginated API responses (handling datasets with 250+ products)</li>
-      <li>Performance testing with Postman (server-side) and WebPageTest (client-side)</li>
-      <li>Implementation of Webhooks for real-time data freshness</li>
-    </ul>
-    
-    <h2>Why This Matters</h2>
-    <p>
-      This project demonstrates the impact of advanced caching and rendering techniques on
-      performance and scalability in modern web applications. It highlights the trade-offs
-      between data freshness and response times, providing valuable insights for building
-      high-performance e-commerce platforms.
-    </p>
-    <p>
-      If you'd like to learn more or discuss this project, feel free to reach out!
-    </p>
-
-    <h2>Future Research Opportunities</h2>
-    <p>
-      This study opens up several avenues for future research, including:
-    </p>
-    <ul>
-      <li><strong>Impact of data size vs. pagination:</strong> Investigating how varying data sizes and pagination
-        strategies affect performance and scalability.</li>
-      <li><strong>Hybrid approaches:</strong> Exploring server- and client-side optimizations, such as initially
-        fetching and delivering products server-side, followed by client-side lazy loading of additional products.</li>
-    </ul>
-    <p>
-      These directions could provide deeper insights into optimizing data-fetching strategies for complex e-commerce
-      scenarios.
-    </p>
-  </div>
 </template>
-
-
-
-<style scoped>
-.about-page {
-  padding: 2rem;
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-}
-
-h1,
-h2 {
-  color: #333;
-}
-
-ul {
-  margin: 1rem 0;
-  padding-left: 1.5rem;
-}
-
-li {
-  margin-bottom: 0.5rem;
-}
-</style>

@@ -22,22 +22,6 @@ if (errorProducts.value) {
     <div>
         <ProductsPageLayout :products="products">
             <template #title>S3</template>
-            <!-- <template #description>
-                <p>SWR - fetch from shopify</p>
-            </template>
-            <template #collapsibleTitle>More Infos..</template>
-            <template #collapsibleContent>
-                <span class="bg-green-800">Working: </span>
-                <p>* Stale While Revalidate (revalidate in background and send updated content with next response)
-                </p>
-                <p><span class="bg-green-800">Right Now:</span>Fetche bei jedem Request alle Produkte auf Server,
-                    PaginationNavigation dann auf
-                    Client</p>
-                <p>Right Now: fetche 250 per Request until all fetched</p>
-                <p class="bg-red-900"><span class=" bg-red-600">To Fix: </span>Code aufräumen / unnötige Methoden /
-                    Snippets
-                    entfernen </p>
-            </template> -->
         </ProductsPageLayout>
     </div>
 </template>

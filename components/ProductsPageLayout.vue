@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import { sortByValue, filterAvailability, filterPriceFrom, filterPriceTo, filterAndSortGQLQuery, setFilterAndSortValuesFromURLQueryString } from '@/utils/state/productsFilterState'
+import { setFilterAndSortValuesFromURLQueryString } from '@/utils/state/productsFilterState'
 
 const props = defineProps({ products: { type: Array, required: true }, PRODUCTS_PER_PAGE: { type: Number, required: false } })
 
-const router = useRouter()
 const route = useRoute()
 
 const currentPage = ref(1);
-// const currentPage = useState<number>('currentPage');
 
 const PRODUCTS_PER_PAGE = ref(24);
-const showFilterSidebar = ref(false);
-const showSortBy = ref(false);
+
 
 console.log("render /" + (route.name as string));
 
@@ -26,7 +23,6 @@ onBeforeUnmount(() => {
 
 async function init() {
     setFilterAndSortValuesFromURLQueryString(route);
-    // await getProductsWithFilterAndSort(false, true);
     setCurrentPageFromURLQueryString();
 }
 init();
@@ -58,17 +54,11 @@ const getPageList = computed(() => { /* 1 .. 3 4 [5] 6 7 .. 13 */
 })
 
 async function clickPageNumber(pageNumber: number) {
-    // (old SPA / VUE Style navigation used before): add page to urlqueryString 
-    // currentPage.value = pageNumber
-    // router.push({ path: route.fullPath, query: { query: route.query.query, sort: route.query.sort, page: currentPage.value.toString() } })
     window.scrollTo(0, 0);
 }
 
-/** ------------------------------------------------------------------
- *  --------------->  to implement backNavigation + PaginationNavigation (via computed getProductsBycurrentPage)<--------------
- *  ------------------------------------------------------------------ */
+
 watch(() => route.query, async (newValue: any, oldValue: any) => {
-    // if (route.name?.toString().includes('products')) {
     //if old and new Query is the same except page value (if only currentPage value changed)
     if (queryIsEqualExceptPage(oldValue, newValue) && oldValue.page !== newValue.page) {
         //if just page is different, no refetch needed, just change currentPage
@@ -78,13 +68,7 @@ watch(() => route.query, async (newValue: any, oldValue: any) => {
             currentPage.value = parseInt(newValue.page);
         }
         return
-    } else {
-        //refetch (when sort or filter values changed)
-        // const { filterValues, sortByValues } = getValuesFromUrlQueryString(route);
-        // setFilterAndSortValuesFromURLQueryString(route, filterValues, sortByValues);
-        // await getProductsWithFilterAndSort(false, true);
     }
-    // }
 })
 
 function queryIsEqualExceptPage(oldValue: any, newValue: any) {
@@ -104,63 +88,7 @@ function queryIsEqualExceptPage(oldValue: any, newValue: any) {
     } else return false;
 }
 
-//#region --- Sort and Filter stuff: ---
 
-function toggleFilterBtn() {
-    showFilterSidebar.value = !showFilterSidebar.value;
-}
-
-let sortClickCounter = 0
-function toggleSortBy(input: "body" | "button" | "filter") {
-    if (input === 'filter') {
-        showFilterSidebar.value = !showFilterSidebar.value;
-        showSortBy.value = false;
-    }
-    else if (input === "button") {
-        showSortBy.value = !showSortBy.value;
-        showFilterSidebar.value = false;
-    }
-    else if (input === "body" && sortClickCounter === 0) {
-        showFilterSidebar.value = false;
-        showSortBy.value = false;
-        sortClickCounter = 0;
-        return;
-    }
-    sortClickCounter++;
-    if (sortClickCounter >= 2) sortClickCounter = 0;
-}
-
-async function clickSortBy(sortKey: string, reverse?: boolean) {
-    // sortByValue.value.sortKey = sortKey;
-    // if (reverse) sortByValue.value.reverse = reverse;
-    // else sortByValue.value.reverse = false;
-    // await getProductsWithFilterAndSort(true, false);
-}
-
-
-async function getProductsWithFilterAndSort(routerPush?: boolean, fetch?: boolean) {
-    currentPage.value = 1;
-    //build gql query parts for sort & filter 
-    const filterGQLQueryPart = buildFilterGQLQueryFromValues(filterAvailability.value, filterPriceFrom.value, filterPriceTo.value);
-    const sortByGQLQueryPart = buildSortGQLQueryFromValues(sortByValue.value.sortKey, sortByValue.value.reverse);
-    filterAndSortGQLQuery.value = filterGQLQueryPart + ' ' + sortByGQLQueryPart;
-
-    //generate URLQueryString from sort & filter gqlQueryParts (?query=query:%20"available_for_sale:true"&sort=sortKey:%20BEST_SELLING%20reverse:%20false%20)
-    if (routerPush) {
-        let urlQueryString = buildAndEncodeUrlQueryString(filterGQLQueryPart, sortByGQLQueryPart);
-        await router.push('/' + (route.name as string) + urlQueryString);
-    }
-    if (fetch) {
-        // timeInMilliseconds = Date.now();
-        // await getAllProductsWithCursorPagination(timeInMilliseconds, filterAndSortGQLQuery.value);
-    }
-}
-
-// watch([filterAvailability, filterPriceFrom, filterPriceTo], async () => {
-//     await getProductsWithFilterAndSort(true, false);
-// })
-
-//#endregion
 </script>
 
 <template>
@@ -168,71 +96,13 @@ async function getProductsWithFilterAndSort(routerPush?: boolean, fetch?: boolea
         <h2 class="text-center text-4xl pt-4">
             <slot name="title">#title</slot>
         </h2>
-        <!-- <div class="py-4">
-            <slot name="description">
-                #description
-            </slot>
-        </div>
-        <Collapsible class="w-5/6 m-auto">
-            <template v-slot:title>
-                <slot name="collapsibleTitle">#collapsibleTitle</slot>
-            </template>
-            <template #content>
-                <slot name="collapsibleContent">#collapsibleContent</slot>
-            </template>
-        </Collapsible> -->
-
-        <!-- <FilterSidebar :is-active="showFilterSidebar" @close="toggleFilterBtn"></FilterSidebar>
-        <div class="myContainer" @click="toggleSortBy('body')">
-            <h2 class="text-4xl text-center md:text-5xl pt-4 md:pt-8">PRODUCTS</h2>
-            <div class="utilBar text-center py-4 md:py-6 flex justify-around items-center">
-                <div>
-                    <button class="border-0 py-2 px-4" @click="toggleSortBy('filter')">Filter</button>
-                </div>
-                <div>
-                    <button class="border-0 py-2 px-4" @click="toggleSortBy('button')">Sort by</button>
-                    <Transition>
-                        <div v-if="showSortBy"
-                            class="sortList px-4 py-2 bg-slate-700 absolute z-50 rounded-md border-2 border-[blueviolet]">
-                            <ul class="flex flex-col text-start">
-                                <li class="border-b  md:hover:text-red-500 cursor-pointer min-w-max p-2"
-                                    @click="clickSortBy('BEST_SELLING')"
-                                    :class="{ 'text-[var(--color-text-active)]': sortByValue.sortKey === 'BEST_SELLING' }">
-                                    Recommended</li>
-                                <li class="border-b md:hover:text-red-500 cursor-pointer min-w-max p-2"
-                                    @click="clickSortBy('PRICE')"
-                                    :class="{ 'text-[var(--color-text-active)]': sortByValue.sortKey === 'PRICE' && sortByValue.reverse === false }">
-                                    Price - low to high</li>
-                                <li class="border-b md:hover:text-red-500 cursor-pointer  min-w-max p-2"
-                                    @click="clickSortBy('PRICE', true)"
-                                    :class="{ 'text-[var(--color-text-active)]': sortByValue.sortKey === 'PRICE' && sortByValue.reverse === true }">
-                                    Price - high to low</li>
-                                <li class="md:hover:text-red-500 cursor-pointer min-w-max p-2"
-                                    @click="clickSortBy('PRODUCT_TYPE')"
-                                    :class="{ 'text-[var(--color-text-active)]': sortByValue.sortKey === 'PRODUCT_TYPE' }">
-                                    Product
-                                    Type</li>
-                            </ul>
-                        </div>
-                    </Transition>
-                </div>
-                <div class="productAmount">
-                    {{ products.length }} products
-                </div>
-            </div>
-        </div> -->
 
         <div class="utilBar text-center py-4 md:py-6 flex justify-around items-center">
             <div class="productAmount">
                 {{ products.length }} products
             </div>
         </div>
-        <!-- <div v-if="pendingProducts">Pending getAllProducts</div>
-        <div v-else-if="errorProducts">errorGetAllProducts</div>
-        <div v-else class="products-wrapper-grid">
-            <ProductCard v-if="products" v-for="(product, index) in getProductsBycurrentPage" :product="product">
-            </ProductCard>
-        </div> -->
+
         <div class="products-wrapper-grid">
             <ProductCard v-if="products" v-for="(product, index) in getProductsBycurrentPage" :product="product">
             </ProductCard>
@@ -247,7 +117,7 @@ async function getProductsWithFilterAndSort(routerPush?: boolean, fetch?: boolea
                 class="pageItem cursor-pointer test">
                 <NuxtLink :href="route.path + buildAndEncodeUrlQueryString('', '', page)"
                     :class="{ active: page === currentPage }" class="paginationLink p-2 px-4">{{
-                    page }}</NuxtLink>
+                        page }}</NuxtLink>
             </div>
             <div v-if="currentPage < maxPages - 2" @click="clickPageNumber(maxPages)" class="pageItem cursor-pointer">
                 <NuxtLink :href="route.path + buildAndEncodeUrlQueryString('', '', maxPages)"
@@ -255,71 +125,7 @@ async function getProductsWithFilterAndSort(routerPush?: boolean, fetch?: boolea
                     {{ maxPages }}</NuxtLink>
             </div>
         </div>
-        <!-- <PaginationBar products="products" :current-page="currentPage" :products-per-page="PRODUCTS_PER_PAGE"></PaginationBar> -->
     </div>
-
-    <!-- <div class="productsView">
-        <FilterSidebar :is-active="showFilterSidebar" @close="toggleFilterBtn"></FilterSidebar>
-        <div class="myContainer" @click="toggleSortBy('body')">
-            <h2 class="text-4xl text-center md:text-5xl pt-4 md:pt-8">PRODUCTS</h2>
-            <div class="utilBar text-center py-4 md:py-6 flex justify-around items-center">
-                <div>
-                    <button class="border-0 py-2 px-4" @click="toggleSortBy('filter')">Filter</button>
-                </div>
-                <div>
-                    <button class="border-0 py-2 px-4" @click="toggleSortBy('button')">Sort by</button>
-                    <Transition>
-                        <div v-if="showSortBy"
-                            class="sortList px-4 py-2 bg-slate-700 absolute z-50 rounded-md border-2 border-[blueviolet]">
-                            <ul class="flex flex-col text-start">
-                                <li class="border-b  md:hover:text-red-500 cursor-pointer min-w-max p-2"
-                                    @click="clickSortBy('BEST_SELLING')"
-                                    :class="{ 'text-[var(--color-text-active)]': sortByValue.sortKey === 'BEST_SELLING' }">
-                                    Recommended</li>
-                                <li class="border-b md:hover:text-red-500 cursor-pointer min-w-max p-2"
-                                    @click="clickSortBy('PRICE')"
-                                    :class="{ 'text-[var(--color-text-active)]': sortByValue.sortKey === 'PRICE' && sortByValue.reverse === false }">
-                                    Price - low to high</li>
-                                <li class="border-b md:hover:text-red-500 cursor-pointer  min-w-max p-2"
-                                    @click="clickSortBy('PRICE', true)"
-                                    :class="{ 'text-[var(--color-text-active)]': sortByValue.sortKey === 'PRICE' && sortByValue.reverse === true }">
-                                    Price - high to low</li>
-                                <li class="md:hover:text-red-500 cursor-pointer min-w-max p-2"
-                                    @click="clickSortBy('PRODUCT_TYPE')"
-                                    :class="{ 'text-[var(--color-text-active)]': sortByValue.sortKey === 'PRODUCT_TYPE' }">
-                                    Product
-                                    Type</li>
-                            </ul>
-                        </div>
-                    </Transition>
-                </div>
-                <div class="productAmount">
-                    {{ products.length }} products
-                </div>
-            </div>
-
-            <div v-if="products.length > 0">
-                <div class="products-wrapper-grid">
-                    <ProductCard v-for="(product, index) in getProductsByCurrentPage" :product="product"></ProductCard>
-                </div>
-                <div class="paginationBar flex justify-center items-center pt-6">
-                    <div v-if="currentPage > 3" @click="clickPageNumber(1)" class="pageItem cursor-pointer">
-                        <a :class="{ active: 1 === currentPage }" class="paginationLink p-2 px-4">1
-                            ..</a>
-                    </div>
-                    <div v-for="(page, index) in getPageList" @click="clickPageNumber(page)"
-                        class="pageItem cursor-pointer test">
-                        <a :class="{ active: page === currentPage }" class="paginationLink p-2 px-4">{{
-                            page }}</a>
-                    </div>
-                    <div v-if="currentPage < maxPages - 2" @click="clickPageNumber(maxPages)" class="pageItem cursor-pointer">
-                        <a :class="{ active: maxPages === currentPage }" class=" paginationLink p-2 px-4"> ..
-                            {{ maxPages }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </template>
 
 

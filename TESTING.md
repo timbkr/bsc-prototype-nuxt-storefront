@@ -40,6 +40,7 @@ Die Tests wurden mit zwei Datensätzen im Shopify-Backend durchgeführt:
 - Einheitliche Hosting-Umgebung (Heroku ECO-Dyno).  
 - Keine parallelen Prozesse oder Nutzerzugriffe.  
 - Einheitliche Testeinstellungen bei WebPageTest.  
+ **Warenkorbfunktionalität deaktiviert**: Um die Testergebnisse der Strategien nicht zu verfälschen, wurden die clientseitigen GraphQL-Requests des Warenkorbs in der Datei `./app.vue` deaktiviert.
 
 ---
 

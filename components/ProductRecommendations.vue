@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { computed } from 'vue'
 import ProductCard from './ProductCard.vue';
 
 const props = defineProps<{ id: string }>();
 
-// const products = useState('products', () => ({} as any));
-
 const { data: products } = await useGetProductRecommendations(props.id);
-
 
 const recommendedProducts = useState('recommendedProducts', () => computed(() => {
     const shuffledArray = products.value.productRecommendations.sort((a: any, b: any) => 0.5 - Math.random());

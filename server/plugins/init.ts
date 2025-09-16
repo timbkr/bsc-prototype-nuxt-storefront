@@ -30,5 +30,4 @@ export default defineNitroPlugin(async (nitroApp) => {
     // Inititalize SWR cache to get cached Response even on first Page Visist after Serverstartup
     // await $fetch("/s3");
     await $fetch("/s4");
-    await $fetch("/nopag/s4");
 });

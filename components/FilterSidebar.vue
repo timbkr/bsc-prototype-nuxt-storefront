@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { filterAvailability, filterPriceFrom, filterPriceTo } from '@/graphql-api/utils/state/productsState'
 import { filterAvailability, filterPriceFrom, filterPriceTo } from '@/utils/state/productsFilterState'
 
 const props = defineProps(['isActive']);
@@ -94,4 +93,4 @@ h3 {
         width: 25rem;
     }
 }
-</style>~/graphql-api/utils/state/productsState~/utils/state/productsState
+</style>

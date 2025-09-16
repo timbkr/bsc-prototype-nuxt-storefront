@@ -33,20 +33,13 @@ export default defineNuxtConfig({
         public: {
             storefront_access_token: "",
             store_url: "",
-            // myTest: process.env.myTest
         },
     },
     routeRules: {
         "/": { redirect: "/about" },
         "/s3": { swr: true }, // Stale While Revalidate (revalidate in background and send updated content with next response)
         "/s4": { swr: true }, // Stale While Revalidate (revalidate in background and send updated content with next response)
-        "/nopag/s3": { swr: true }, // Stale While Revalidate (revalidate in background and send updated content with next response)
-        "/nopag/s4": { swr: true }, // Stale While Revalidate (revalidate in background and send updated content with next response)
-        // "/ssg_test": { prerender: true }, // static site generated (only at build time, not in dev environment)
     },
-    // webpack: {
-    //     extractCSS: true,
-    // },
     devtools: { enabled: true },
     modules: ["@nuxtjs/tailwindcss"],
     imports: {
